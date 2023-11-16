@@ -1,31 +1,32 @@
 ﻿from tkinter import messagebox
-from PySide6.QtWidgets import QApplication, QGridLayout, QLabel, QMainWindow, QComboBox, QWidget, QLineEdit, QPushButton
+from PySide6.QtWidgets import QApplication, QHBoxLayout, QLabel, QMainWindow, QComboBox, QVBoxLayout, QWidget, QLineEdit, QPushButton
 
 class VentanaPrincipal(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setWindowTitle("Conversor de Temperaturas")
-        layout = QGridLayout()
+        layout_vertical = QVBoxLayout()
+        layout_horizontal = QHBoxLayout()
         componente_principal = QWidget()
-        componente_principal.setLayout(layout)
+        componente_principal.setLayout(layout_vertical)
         self.setCentralWidget(componente_principal)
         self.label = QLabel("Resultado: ",self)
+        elementos = ["Celsius", "Fahrenheit"]
         self.comboBox = QComboBox(self)
-        self.comboBox.addItem("Celsius")
-        self.comboBox.addItem("Fahrenheit")
+        self.comboBox.addItems(elementos)
         self.comboBox2 = QComboBox(self)
-        self.comboBox2.addItem("Celsius")
-        self.comboBox2.addItem("Fahrenheit")
+        self.comboBox2.addItems(elementos)
         self.lineEdit = QLineEdit()
         self.lineEdit.setPlaceholderText("Ingrese temperatura")
         a = QLabel("a", self)
         convertir = QPushButton("Convertir")
-        layout.addWidget(self.comboBox, 0, 0)
-        layout.addWidget(a, 0, 1)
-        layout.addWidget(self.comboBox2, 0, 2)
-        layout.addWidget(self.lineEdit, 1, 0, 1, 3)
-        layout.addWidget(convertir, 2, 0, 1, 3)
-        layout.addWidget(self.label, 3, 0)
+        layout_horizontal.addWidget(self.comboBox)
+        layout_horizontal.addWidget(a)
+        layout_horizontal.addWidget(self.comboBox2)
+        layout_vertical.addLayout(layout_horizontal)
+        layout_vertical.addWidget(self.lineEdit)
+        layout_vertical.addWidget(convertir)
+        layout_vertical.addWidget(self.label)
         convertir.clicked.connect(self.convertir_temperatura)
         
     
